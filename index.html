@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,49 +14,52 @@
 </head>
 <body class="bg-gray-100 text-gray-900">
   <!-- Header -->
-  <header class="p-4 bg-green-700 text-white text-center text-2xl font-bold">
-    🌍 EcoVerse – From Sightings to Verified Action
-  </header>
+  <header class="p-5 bg-gradient-to-r from-green-700 to-emerald-600 text-white text-center text-2xl sm:text-3xl font-extrabold shadow-md">
+  🌍 EcoVerse – From Sightings to Verified Action
+</header>
+
 
   <!-- Buttons -->
-  <div class="flex justify-center space-x-4 p-6">
-    <button onclick="showForm()" class="bg-green-500 px-4 py-2 rounded-xl shadow text-white">Report a Sighting</button>
-    <button onclick="showMap()" class="bg-blue-500 px-4 py-2 rounded-xl shadow text-white">View Map</button>
-    <button onclick="showLeaderboard()" class="bg-yellow-500 px-4 py-2 rounded-xl shadow text-white">Leaderboard</button>
+  <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 p-6 max-w-5xl mx-auto">
+    <button onclick="showForm()" class="bg-green-500 px-4 py-2 rounded-xl shadow text-white hover:opacity-90 active:scale-[0.98] transition rounded-2xl shadow-lg px-5 py-3 font-semibold">Report a Sighting</button>
+    <button onclick="showMap()" class="bg-blue-500 px-4 py-2 rounded-xl shadow text-white hover:opacity-90 active:scale-[0.98] transition rounded-2xl shadow-lg px-5 py-3 font-semibold">View Map</button>
+    <button onclick="showLeaderboard()" class="bg-yellow-500 px-4 py-2 rounded-xl shadow text-white hover:opacity-90 active:scale-[0.98] transition rounded-2xl shadow-lg px-5 py-3 font-semibold">Leaderboard</button>
   </div>
 
   <!-- Sections -->
-  <main class="p-6">
+  <main class="p-6 max-w-5xl mx-auto">
     <!-- Report Form -->
-    <section id="reportSection" class="hidden">
+    <section id="reportSection" class="hidden bg-white rounded-2xl shadow-md p-5 sm:p-6>
       <h2 class="text-xl font-bold mb-2">Report a Sighting</h2>
       <form onsubmit="submitReport(event)" class="space-y-2">
-        <input type="text" id="category" placeholder="Category (Plastic, Pollution...)" class="w-full p-2 border rounded" required />
-        <textarea id="description" placeholder="Description" class="w-full p-2 border rounded" required></textarea>
-        <input type="text" id="location" placeholder="Location (City)" class="w-full p-2 border rounded" required />
-        <button type="submit" class="bg-green-600 px-4 py-2 rounded text-white">Submit</button>
+        <input type="text" id="category" placeholder="Category (Plastic, Pollution...)"class="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm" required />
+        <textarea id="description" placeholder="Description" class="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm" required></textarea>
+        <input type="text" id="location" placeholder="Location (City)" class="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm" required />
+        <button type="submit" class="bg-emerald-600 px-5 py-3 rounded-xl text-white font-semibold hover:bg-emerald-700 active:scale-[0.98] transition">Submit</button>
       </form>
     </section>
 
     <!-- Map -->
-    <section id="mapSection" class="hidden">
+    <section id="mapSection" class="hidden bg-white rounded-2xl shadow-md p-5 sm:p-6>
       <h2 class="text-xl font-bold mb-2">Eco Map</h2>
       <div id="map" class="h-96"></div>
     </section>
 
     <!-- Leaderboard -->
-    <section id="leaderboardSection" class="hidden">
+    <section id="leaderboardSection" class="hidden bg-white rounded-2xl shadow-md p-5 sm:p-6>
       <h2 class="text-xl font-bold mb-2">Leaderboard</h2>
-      <table class="w-full border text-center">
-        <thead>
-          <tr class="bg-gray-300">
-            <th class="p-2">Name</th>
-            <th class="p-2">EcoPoints</th>
-          </tr>
-        </thead>
-        <tbody id="leaderboardTable">
-        </tbody>
-      </table>
+      <div class="overflow-x-auto rounded-xl border border-gray-200"></div>
+       <table class="w-full border text-center">
+         <thead>
+           <tr class="bg-gray-300">
+             <th class="p-2">Name</th>
+             <th class="p-2">EcoPoints</th>
+           </tr>
+         </thead>
+         <tbody id="leaderboardTable">
+         </tbody>
+     </table>
+    </div>
     </section>
   </main>
 
