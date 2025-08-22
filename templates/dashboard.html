@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Climate Action Dashboard</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Google Maps -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+
+    body {
+      background: linear-gradient(to right,#1e3c72,#2a5298,#00c9a7,#92fe9d);
+      background-size:400% 400%;
+      animation: gradient 12s ease infinite;
+      color: #fff;
+    }
+    @keyframes gradient {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    header {
+      background: rgba(0,0,0,0.3);
+      padding: 15px 40px;
+      display:flex; justify-content:space-between; align-items:center;
+      backdrop-filter: blur(8px);
+    }
+    header h1 { font-size: 24px; font-weight:600; }
+    nav a { margin:0 12px; color:#e8faff; text-decoration:none; font-weight:500; }
+    nav a:hover { text-decoration:underline; }
+
+    .container {
+      display:grid;
+      grid-template-columns: 2fr 1fr;
+      gap:20px;
+      padding: 30px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.15);
+      border-radius:20px;
+      padding:20px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.2);
+      backdrop-filter:blur(10px);
+    }
+
+    .quote {
+      text-align:center;
+      font-size:20px;
+      margin: 25px 0;
+      font-style: italic;
+      color: #f0fff0;
+    }
+
+    #map {
+      width: 100%;
+      height: 400px;
+      border-radius:15px;
+    }
+
+    table {
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding:10px;
+      text-align:left;
+    }
+    th {
+      background:#00c9a7;
+      color:#003333;
+    }
+    tr:nth-child(even) { background: rgba(255,255,255,0.1); }
+
+    h2 { margin-bottom:15px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌍 Climate Action Dashboard</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Projects</a>
+      <a href="#">Community</a>
+      <a href="#">Logout</a>
+    </nav>
+  </header>
+
+  <div class="quote">"The Earth is what we all have in common." – Wendell Berry 🌱</div>
+
+  <div class="container">
+    <!-- Left Section -->
+    <div>
+      <div class="card">
+        <h2>📊 Climate Stats</h2>
+        <canvas id="climateChart"></canvas>
+      </div>
+      <div class="card" style="margin-top:20px;">
+        <h2>🗺️ Conservation Map</h2>
+        <div id="map"></div>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div>
+      <div class="card">
+        <h2>🏆 Leaderboard</h2>
+        <table>
+          <tr><th>Name</th><th>Points</th></tr>
+          <tr><td>Ocean NGO</td><td>980</td></tr>
+          <tr><td>Green Students</td><td>860</td></tr>
+          <tr><td>Marine Researchers</td><td>780</td></tr>
+          <tr><td>Eco Volunteers</td><td>690</td></tr>
+        </table>
+      </div>
+      <div class="card" style="margin-top:20px;">
+        <h2>🌟 Inspiration</h2>
+        <p>"Small acts, when multiplied by millions of people, can transform the world." – Howard Zinn</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Chart.js Climate Chart
+    const ctx = document.getElementById('climateChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Carbon Emission', 'Plastic Waste', 'Forest Area', 'Marine Life'],
+        datasets: [{
+          label: 'Progress (%)',
+          data: [70, 50, 80, 65],
+          backgroundColor: ['#00c9a7','#92fe9d','#2a5298','#1e3c72']
+        }]
+      },
+      options: { responsive:true, plugins:{legend:{labels:{color:'white'}}}, scales:{x:{ticks:{color:'white'}}, y:{ticks:{color:'white'}}} }
+    });
+
+    // Google Map with Pins
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 20.5937, lng: 78.9629 }, // India center
+        zoom: 4,
+      });
+
+      // Example pins
+      const locations = [
+        { lat: 19.076, lng: 72.8777, title: "Mumbai Cleanup", color: "red" },
+        { lat: 28.7041, lng: 77.1025, title: "Delhi Tree Plantation", color: "green" },
+        { lat: 13.0827, lng: 80.2707, title: "Chennai Marine Drive Project", color: "blue" }
+      ];
+
+      locations.forEach(loc => {
+        new google.maps.Marker({
+          position: { lat: loc.lat, lng: loc.lng },
+          map,
+          title: loc.title,
+          icon: {
+            url: `http://maps.google.com/mapfiles/ms/icons/${loc.color}-dot.png`
+          }
+        });
+      });
+    }
+    window.onload = initMap;
+  </script>
+</body>
+</html>
