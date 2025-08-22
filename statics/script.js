@@ -1,5 +1,3 @@
-
-
 // Switch Sections
 function showForm() {
   hideAll();
@@ -9,6 +7,10 @@ function showMap() {
   hideAll();
   document.getElementById("mapSection").classList.remove("hidden");
   initMap();
+  // Fix map sizing after showing
+  requestAnimationFrame(() => {
+    if (map) map.invalidateSize();
+  });
 }
 function showLeaderboard() {
   hideAll();
@@ -18,6 +20,7 @@ function hideAll() {
   document.getElementById("reportSection").classList.add("hidden");
   document.getElementById("mapSection").classList.add("hidden");
   document.getElementById("leaderboardSection").classList.add("hidden");
+  document.getElementById("quizSection").classList.add("hidden");
 }
 
 // Store reports in memory
@@ -43,12 +46,12 @@ function submitReport(event) {
   const category = document.getElementById("category").value;
   const description = document.getElementById("description").value;
   const location = document.getElementById("location").value;
-
+  const reporter = document.getElementById("reporterName").value;
   // For demo: use a random coordinate around Kolkata
   let lat = 22.57 + (Math.random() - 0.5) * 0.2;
   let lng = 88.36 + (Math.random() - 0.5) * 0.2;
 
-  let report = { category, description, location, lat, lng, status: "new" };
+  let report = { reporter, category, description, location, lat, lng, status: "new" };
   reports.push(report);
   if (!map) initMap();
 
@@ -57,21 +60,27 @@ function submitReport(event) {
  let marker = L.marker([lat, lng], { icon: makeDivIcon(emoji, report.status) })
   .addTo(map)
   .bindPopup(`
-    <b>${emoji} ${category}</b><br>
-    ${description}<br>
-    📍 ${location}<br><br>
-    <button onclick="updateStatus(${reports.length - 1}, 'verified')">✅ Verify</button>
-    <button onclick="updateStatus(${reports.length - 1}, 'resolved')">✔ Resolve</button>
-  `);
-
+  <b>${category}</b><br>
+  ${description}<br>
+  📍 ${location}<br>
+  Reporter: ${reporter}<br>
+  Status: ${statusLabel("new")}<br><br>
+  <button onclick="updateStatus(${reports.length - 1}, 'verified')">✅ Verify</button>
+  <button onclick="updateStatus(${reports.length - 1}, 'resolved')">✔ Resolve</button>
+`);
 
   // Store marker inside report for later updates
   report.marker = marker;
   // Give EcoPoints to reporter
-  addPoints("Reporter", 5);
+  addPoints(reporter, 5);
   alert("Report submitted! Check the map to see your pin.");
   document.querySelector("form").reset();
+// If map exists, fix its sizing
+  if (map) {
+    requestAnimationFrame(() => map.invalidateSize());
 }
+}
+
 function categoryEmoji(catRaw) {
   const cat = (catRaw || "").toLowerCase();
   if (cat.includes("plastic") || cat.includes("garbage") || cat.includes("trash")) return "🗑️";
@@ -93,8 +102,16 @@ function makeDivIcon(emoji, status) {
   return L.divIcon({ html, className: "", iconSize: [34, 34], iconAnchor: [17, 34], popupAnchor: [0, -30] });
 }
 // Initialize map
+// Initialize map
 let map;
+
+// Ensure map resizes properly when window size changes
+window.addEventListener("resize", () => {
+  if (map) map.invalidateSize();
+});
+
 function initMap() {
+
   if (!map) {
     map = L.map("map").setView([22.57, 88.36], 5); // Center on India
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -126,18 +143,60 @@ function updateStatus(index, newStatus) {
   reports[index].status = newStatus;
   let report = reports[index];
   report.marker.setIcon(makeDivIcon(categoryEmoji(report.category), newStatus));
-  report.marker.setPopupContent(`
-    <b>${report.category}</b><br>
-    ${report.description}<br>
-    📍 ${report.location}<br><br>
-    Status: ${newStatus.toUpperCase()}
-  `);
+  let statusEmoji = newStatus === "new" ? "🟥 NEW" :
+                  newStatus === "verified" ? "🟧 VERIFIED" :
+                  "🟩 RESOLVED";
+report.marker.setPopupContent(`
+  <b>${report.category}</b><br>
+  ${report.description}<br>
+  📍 ${report.location}<br>
+  Reporter: ${report.reporter}<br>
+  Status: ${statusEmoji}
+`);
   if (newStatus === "verified") {
-   addPoints("Verifier", 10);
+    let verifier = prompt("Enter verifier name:");
+    if (!verifier) return; // cancelled
+    report.verifier = verifier;
+    addPoints(verifier, 10);
   } 
   else if (newStatus === "resolved") {
-   addPoints("Resolver", 15);
+    let resolver = prompt("Enter resolver name:");
+    if (!resolver) return; // cancelled
+    report.resolver = resolver;
+    addPoints(resolver, 15);
   }
+
+  report.status = newStatus;
+  report.marker.setIcon(getMarkerIcon(newStatus));
+
+  // Rebuild popup with updated info
+  let popupHTML = `
+    <b>${report.category}</b><br>
+    ${report.description}<br>
+    📍 ${report.location}<br>
+    Reporter: ${report.reporter || "Unknown"}<br>
+    Status: ${statusLabel(report.status)}<br>
+    ${report.verifier ? "Verifier: " + report.verifier + "<br>" : ""}
+    ${report.resolver ? "Resolver: " + report.resolver + "<br>" : ""}
+  `;
+
+  // Only show buttons if not resolved
+  if (report.status !== "resolved") {
+    popupHTML += `
+      <br>
+      <button onclick="updateStatus(${index}, 'verified')">✅ Verify</button>
+      <button onclick="updateStatus(${index}, 'resolved')">✔ Resolve</button>
+    `;
+  }
+
+  report.marker.setPopupContent(popupHTML);
+}
+
+function statusLabel(status) {
+  if (status === "new") return "🟥 NEW";
+  if (status === "verified") return "🟧 VERIFIED";
+  if (status === "resolved") return "🟩 RESOLVED";
+  return status;
 }
 
 function addPoints(name, points) {
@@ -152,19 +211,166 @@ function updateLeaderboard() {
 
   // Sort by highest points
   let sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-  
 
-  for (let [name, pts] of sorted) {
-    const badge = getBadgeFor(pts);
-let row = `
-  <tr class="transition">
-    <td class="p-2 border text-left sm:text-center">${name}</td>
-    <td class="p-2 border">
-      ${pts} ${badge ? `<span class="ml-2 inline-block text-sm px-2 py-1 rounded-full bg-yellow-100">${badge}</span>` : ""}
-    </td>
-  </tr>`;
+  sorted.forEach(([name, pts], index) => {
+  let rank;
+  if (index === 0) rank = "🥇";
+  else if (index === 1) rank = "🥈";
+  else if (index === 2) rank = "🥉";
+  else rank = (index + 1).toString();
+
+  let row = `
+    <tr>
+      <td class="p-2 border">${rank}</td>
+      <td class="p-2 border">${name}</td>
+      <td class="p-2 border">${pts}</td>
+    </tr>`;
   table.innerHTML += row;
+  });
+}
 
+function showQuiz() {
+  hideAll();
+  document.getElementById("quizSection").classList.remove("hidden");
+}
+
+const quizQuestions = [
+  {
+    q: "Which gas is the biggest contributor to global warming?",
+    options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+    answer: 1
+  },
+  {
+    q: "Which of these is NOT recyclable?",
+    options: ["Plastic bottles", "Glass jars", "Styrofoam", "Aluminium cans"],
+    answer: 2
+  },
+  {
+    q: "Planting trees helps mainly by?",
+    options: ["Producing plastic", "Absorbing CO2", "Generating heat", "Creating waste"],
+    answer: 1
   }
-  
+];
+
+let currentQ = 0;
+let quizScore = 0;
+
+function startQuiz() {
+  currentQ = 0;
+  quizScore = 0;
+  renderQuestion();
+}
+
+function renderQuestion() {
+  if (currentQ >= quizQuestions.length) {
+    // Quiz finished
+    let player = prompt("Enter your name to claim EcoPoints:");
+    if (player) {
+      addPoints(player, quizScore * 10); // 10 EcoPoints per correct
+      alert(`You earned ${quizScore * 10} EcoPoints!`);
+    }
+    document.getElementById("quizContainer").innerHTML = "";
+    return;
+  }
+
+  let qObj = quizQuestions[currentQ];
+  let container = document.getElementById("quizContainer");
+  container.innerHTML = `
+    <p class="font-semibold">${qObj.q}</p>
+    <div id="options">
+      ${qObj.options.map((opt, i) =>
+        `<button onclick="submitAnswer(${i})" 
+          class="block w-full text-left p-3 border rounded mb-2 hover:bg-gray-100">${opt}</button>`
+      ).join("")}
+    </div>
+    <p id="feedback" class="mt-2 font-semibold"></p>
+  `;
+}
+
+function renderQuestion() {
+  if (currentQ >= quizQuestions.length) {
+    let player = prompt("Enter your name to claim EcoPoints:");
+    if (player) {
+      addPoints(player, quizScore * 10);
+      alert(`You earned ${quizScore * 10} EcoPoints!`);
+    }
+    document.getElementById("quizContainer").innerHTML = "";
+    return;
+  }
+
+  let qObj = quizQuestions[currentQ];
+  let container = document.getElementById("quizContainer");
+  container.innerHTML = `
+    <p class="font-semibold mb-2">${qObj.q}</p>
+    <div id="options">
+      ${qObj.options.map((opt, i) =>
+        `<button onclick="submitAnswer(${i})" 
+          class="block w-full text-left p-3 border rounded mb-2 hover:bg-gray-100">${opt}</button>`
+      ).join("")}
+    </div>
+    <p id="feedback" class="mt-2 font-semibold"></p>
+  `;
+}
+
+function submitAnswer(selected) {
+  let correctIndex = quizQuestions[currentQ].answer;
+  let correctText = quizQuestions[currentQ].options[correctIndex];
+  let feedback = document.getElementById("feedback");
+
+  // disable all buttons once answered
+  let buttons = document.querySelectorAll("#options button");
+  buttons.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correctIndex) {
+      // highlight correct option
+      btn.classList.add("bg-green-200", "border-green-600");
+    }
+    if (i === selected && selected !== correctIndex) {
+      // highlight wrong selection
+      btn.classList.add("bg-red-200", "border-red-600");
+    }
+  });
+
+  if (selected === correctIndex) {
+    feedback.textContent = "✅ Correct! +10 points";
+    feedback.className = "mt-2 font-semibold text-green-600";
+    quizScore++;
+  } else {
+    feedback.textContent = `❌ Wrong! The correct answer is: ${correctText}`;
+    feedback.className = "mt-2 font-semibold text-red-600";
+  }
+
+  // Add "Next Question" button
+  feedback.innerHTML += `<br><button onclick="nextQuestion()" class="mt-3 px-4 py-2 bg-blue-500 text-white rounded">Next Question</button>`;
+}
+
+function nextQuestion() {
+  currentQ++;
+  renderQuestion();
+}
+
+function showDashboard() {
+  hideAll();
+  document.getElementById("dashboardSection").classList.remove("hidden");
+  renderImpactChart();
+}
+
+function renderImpactChart() {
+  const ctx = document.getElementById('impactChart');
+  const counts = {
+    new: reports.filter(r => r.status === "new").length,
+    verified: reports.filter(r => r.status === "verified").length,
+    resolved: reports.filter(r => r.status === "resolved").length,
+  };
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['New', 'Verified', 'Resolved'],
+      datasets: [{
+        label: '# of Reports',
+        data: [counts.new, counts.verified, counts.resolved],
+        backgroundColor: ['#ef4444', '#f59e0b', '#10b981']
+      }]
+    }
+  });
 }

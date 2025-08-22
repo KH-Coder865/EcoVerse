@@ -37,6 +37,7 @@
       border-radius: 25px;
       background: rgba(255, 255, 255, 0.1);
       -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
       box-shadow: 0 8px 32px rgba(0,0,0,0.25);
       text-align: center;
       color: #ffffff;
@@ -67,10 +68,10 @@
       background: #ffffff;
     }
 
-    .login-box button {
+    .login-box .button {
+      text-decoration: none;
       width: 100%;
       padding: 15px;
-      margin-top: 18px;
       border: none;
       border-radius: 15px;
       background: linear-gradient(135deg, #00ff88, #00c6ff);
@@ -81,7 +82,7 @@
       transition: 0.3s;
     }
 
-    .login-box button:hover {
+    .login-box .button:hover {
       transform: scale(1.06);
       background: linear-gradient(135deg, #0072ff, #00ff88);
       color: #fff;
@@ -115,10 +116,10 @@
   <div class="login-box">
     <div class="icon">🌱</div>
     <h2>Climate Action Login</h2>
-    <form>
+    <form style="display: flex; flex-direction: column; gap: 20px;">
       <input type="text" placeholder="🌍 Username" required>
       <input type="password" placeholder="🔒 Password" required>
-      <button type="submit">Login</button>
+      <a class="button" href="/home">Login</a>
     </form>
     <div class="extra">
       <p>Don't have an account? <a href="#">Sign Up</a></p>

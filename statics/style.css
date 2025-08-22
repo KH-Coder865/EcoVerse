@@ -1,9 +1,10 @@
 #map {
-  height: 60vh;      /* responsive height */
-  min-height: 320px; /* ensure usable on small phones */
-  margin: 10px;
+  width: 100%;
+  height: 70vh;      /* fills 70% of viewport */
+  min-height: 360px; /* safe on small phones */
   border-radius: 16px;
   overflow: hidden;
+  margin: 10px;
 }
 .marker {
 display: inline-flex;
