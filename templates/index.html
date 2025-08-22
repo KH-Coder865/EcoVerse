@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,13 +12,16 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css" />
+  <!--Google APIs-->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 </head>
 <body class="bg-gray-100 text-gray-900">
   <!-- Header -->
   <header class="p-5 bg-gradient-to-r from-green-700 to-emerald-600 text-white text-center text-2xl sm:text-3xl font-extrabold shadow-md">
   🌍 EcoVerse – From Sightings to Verified Action
+  <span >Welcome {{this_user.username}}</span>
 </header>
-
 
   <!-- Buttons -->
   <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 p-6 max-w-5xl mx-auto">
@@ -28,6 +30,7 @@
     <button onclick="showQuiz()" class="bg-purple-500 px-4 py-2 rounded-xl shadow text-white hover:opacity-90 active:scale-[0.98] transition rounded-2xl shadow-lg px-5 py-3 font-semibold">Play Quiz</button>
     <button onclick="showLeaderboard()" class="bg-yellow-500 px-4 py-2 rounded-xl shadow text-white hover:opacity-90 active:scale-[0.98] transition rounded-2xl shadow-lg px-5 py-3 font-semibold">Leaderboard</button>
     <button onclick="showDashboard()" class="bg-indigo-500 px-4 py-2 rounded-xl text-white">Impact Dashboard</button>
+    <button class="bg-red-500 px-4 py-2 rounded-xl text-white"><a href="/logout" style="text-decoration: none;">Logout</a></button>
   </div>
 
   <!-- Sections -->
@@ -80,6 +83,33 @@
       <h2 class="text-xl font-bold mb-2">Impact Dashboard</h2>
       <canvas id="impactChart" width="400" height="200"></canvas>
     </section>
+    
+    <!--Collab Section-->
+    <section id="collabSection" class="p-4">
+      <h2 class="text-xl font-bold mb-2">Collaboration Board</h2>
+      <table id="taskTable" class="w-full border border-gray-300">
+        <thead>
+          <tr class="bg-gray-200">
+           <th class="p-2">Task</th>
+           <th class="p-2">Assigned To</th>
+           <th class="p-2">Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+       </table>
+      </section>
+
+      <!--Metric Section+-->
+      <section id="metricsSection" class="p-4">
+       <h2 class="text-xl font-bold mb-2">Impact Metrics</h2>
+  <canvas id="metricsChart" width="300" height="200"></canvas>
+  <div class="mt-4">
+    <p class="font-semibold">Resolution Rate</p>
+    <div class="w-full bg-gray-200 rounded-full h-4">
+      <div id="resolutionBar" class="bg-green-500 h-4 rounded-full" style="width: 0%"></div>
+    </div>
+  </div>
+</section>
 
   </main>
 
