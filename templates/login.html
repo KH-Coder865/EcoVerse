@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Climate Action Login</title>
+  <style>
+    /* Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(120deg, #00c6ff, #0072ff, #00ff88, #3ae374);
+      background-size: 300% 300%;
+      animation: gradientBG 12s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .login-box {
+      width: 400px;
+      padding: 45px;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .login-box h2 {
+      margin-bottom: 25px;
+      font-weight: 600;
+      font-size: 30px;
+      color: #eafffa;
+      letter-spacing: 1px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 14px 18px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 15px;
+      outline: none;
+      font-size: 15px;
+      background: rgba(255,255,255,0.85);
+      color: #333;
+    }
+
+    .login-box input:focus {
+      box-shadow: 0 0 8px #00e6b8;
+      background: #ffffff;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 18px;
+      border: none;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #00ff88, #00c6ff);
+      color: #003333;
+      font-weight: 600;
+      font-size: 17px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .login-box button:hover {
+      transform: scale(1.06);
+      background: linear-gradient(135deg, #0072ff, #00ff88);
+      color: #fff;
+    }
+
+    .extra {
+      margin-top: 20px;
+      font-size: 15px;
+      color: #f0faff;
+    }
+
+    .extra a {
+      color: #00ffcc;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .extra a:hover {
+      text-decoration: underline;
+    }
+
+    .icon {
+      font-size: 50px;
+      margin-bottom: 15px;
+      color: #00ffd5;
+      text-shadow: 0 0 15px #00ffd5;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <div class="icon">🌱</div>
+    <h2>Climate Action Login</h2>
+    <form>
+      <input type="text" placeholder="🌍 Username" required>
+      <input type="password" placeholder="🔒 Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <div class="extra">
+      <p>Don't have an account? <a href="#">Sign Up</a></p>
+    </div>
+  </div>
+</body>
+</html>
