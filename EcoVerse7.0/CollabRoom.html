@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoVerse – From Sightings to Verified Action</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <header class="p-5 bg-gradient-to-r from-green-700 to-emerald-600 text-white text-center text-2xl sm:text-3xl font-extrabold shadow-md">
+        🌍 EcoVerse – From Sightings to Verified Action
+    </header>
+    <nav class="flex gap-4 justify-center mt-4">
+        <a href="homepage.html" class="text-green-700 font-bold">Home</a>
+        <a href="ReportASighting.html" class="text-green-700 font-bold">Report Sighting</a>
+        <a href="ViewMap.html" class="text-green-700 font-bold">Map</a>
+        <a href="PlayQuiz.html" class="text-green-700 font-bold">Quiz</a>
+        <a href="showLeaderboard.html" class="text-green-700 font-bold">Leaderboard</a>
+        <a href="showDashboard.html" class="text-green-700 font-bold">Dashboard</a>
+        <a href="Verify.html" class="text-green-700 font-bold">Verify</a>
+    </nav>
+    <main class="p-6 max-w-5xl mx-auto">
+        <section id="collabSection" class="p-4">
+            <h2 class="text-xl font-bold mb-2">Collaboration Board</h2>
+            <table id="taskTable" class="w-full border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="p-2">Task</th>
+                        <th class="p-2">Assigned To</th>
+                        <th class="p-2">Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+    </main>
+    <script src="script.js"></script>
+    <script>
+      if (typeof renderTasks === "function") renderTasks();
+    </script>
+</body>
+</html>

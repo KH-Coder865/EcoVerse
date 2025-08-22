@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoVerse – From Sightings to Verified Action</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <header class="p-5 bg-gradient-to-r from-green-700 to-emerald-600 text-white text-center text-2xl sm:text-3xl font-extrabold shadow-md">
+    🌍 EcoVerse – From Sightings to Verified Action
+  </header>
+  <main class="p-6 max-w-5xl mx-auto">
+    <section id="quizSection" class="bg-white rounded-2xl shadow-md p-5 sm:p-6">
+      <h2 class="text-xl font-bold mb-2">Eco Quiz 🌱</h2>
+      <div id="quizContainer" class="space-y-4"></div>
+      <button onclick="startQuiz()" class="bg-purple-600 px-5 py-3 rounded-xl text-white font-semibold hover:bg-purple-700 active:scale-[0.98] transition">Start Quiz</button>
+    </section>
+    <section id="challengesSection" class="p-4">
+      <h2 class="text-xl font-bold mb-2">Weekly Challenges</h2>
+      <div class="border p-3 rounded bg-yellow-100">
+        <p>Report 5 environmental issues this week → Bonus 50 EcoPoints!</p>
+        <p id="challengeStatus" class="mt-2 font-semibold"></p>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

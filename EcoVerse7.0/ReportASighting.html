@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoVerse – From Sightings to Verified Action</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <header class="p-5 bg-gradient-to-r from-green-700 to-emerald-600 text-white text-center text-2xl sm:text-3xl font-extrabold shadow-md">
+    🌍 EcoVerse – From Sightings to Verified Action
+  </header>
+  <main class="p-6 max-w-5xl mx-auto">
+    <section id="reportSection" class="bg-white rounded-2xl shadow-md p-5 sm:p-6">
+      <h2 class="text-xl font-bold mb-2">Report a Sighting</h2>
+      <form onsubmit="submitReport(event)" class="space-y-2">
+        <input type="text" id="reporterName" placeholder="Your Name" class="w-full p-2 border rounded" required />
+        <input type="text" id="category" placeholder="Category (Plastic, Pollution...)" class="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm" required />
+        <textarea id="description" placeholder="Description" class="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm" required></textarea>
+        <input type="text" id="location" placeholder="Location (City)" class="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent shadow-sm" required />
+        <button type="submit" class="bg-emerald-600 px-5 py-3 rounded-xl text-white font-semibold hover:bg-emerald-700 active:scale-[0.98] transition">Submit</button>
+      </form>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
