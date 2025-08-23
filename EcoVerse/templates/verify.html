@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Reports - EcoVerse</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900 d-flex flex-col items-center">
+
+  <header style="width:100vw;" class="p-5 bg-gradient-to-r from-green-700 to-emerald-600 text-white text-center text-2xl font-extrabold shadow-md">
+    Verify Reports – EcoVerse
+  </header>
+
+  <main class="p-6 max-w-5xl mx-auto">
+    <section class="rounded-xl shadow-md p-4 mb-6">
+      <h2 class="text-xl font-bold mb-4">Pending Reports</h2>
+      <table class="w-full border table table-hover border-gray-300 text-center" id="verifyTable">
+        <thead class="table-success">
+          <tr class="bg-gray-200">
+            <th class="p-2">Reporter</th>
+            <th class="p-2">Category</th>
+            <th class="p-2">Description</th>
+            <th class="p-2">Location</th>
+            <th class="p-2">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in rows %}
+          <tr>
+            <td>{{g[r.reporter_email]}}</td>
+            <td>{{r.category}}</td>
+            <td>{{r.description}}</td>
+            <td>{{r.lat}}, {{r.lng}}</td>
+            {% if r.status=='new' %}
+            <td><a class="btn btn-primary" href="verifybef/{{r.id}}">Verify</a></td>
+            {% else %}
+            <td><a class="btn btn-success" href="#">Verified</a></td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+    </main>
+    <a class="btn btn-warning" href="/home">Go Back</a>
+  <script src="{{url_for('static', filename='script.js')}}"></script>
+</body>

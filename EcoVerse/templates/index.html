@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoVerse – From Sightings to Verified Action</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart JS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
+  <!--Google APIs-->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(120deg, #00c6ff, #0072ff, #00ff88, #3ae374);
+      background-size: 300% 300%;
+      animation: gradientBG 12s ease infinite;
+    }
+
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+  <!-- Header -->
+  <header
+    class="p-5 bg-gradient-to-r from-green-700 to-emerald-600 text-white text-center text-2xl sm:text-3xl font-extrabold shadow-md">
+    🌍 EcoVerse – From Sightings to Verified Action
+    <span>Welcome {{this_user.username}}</span>
+  </header>
+
+  <!-- Buttons -->
+  <div
+    class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 p-6 max-w-5xl mx-auto">
+    <button
+      class="bg-green-500 px-4 py-2 rounded-xl shadow text-white hover:opacity-90 active:scale-[0.98] transition rounded-2xl shadow-lg px-5 py-3 font-semibold"><a
+        href="/showrep">Report a Sighting</a></button>
+    <button
+      class="bg-blue-500 px-4 py-2 rounded-xl shadow text-white hover:opacity-90 active:scale-[0.98] transition rounded-2xl shadow-lg px-5 py-3 font-semibold"><a
+        href="/map">View Map</a></button>
+    <button
+      class="bg-purple-500 px-4 py-2 rounded-xl shadow text-white hover:opacity-90 active:scale-[0.98] transition rounded-2xl shadow-lg px-5 py-3 font-semibold"><a
+        href="/quiz">Play Quiz</a></button>
+    <button class="bg-yellow-500 px-4 py-2 rounded-xl shadow text-white hover:opacity-90 active:scale-[0.98] transition rounded-2xl shadow-lg px-5 py-3 font-semibold"><a href="/leaderboard">Leaderboard</a></button>
+    <button class="bg-indigo-500 px-4 py-2 rounded-xl text-white"><a href="/dashboard">Impact Dashboard</a></button>
+    {% if this_user.category != 'user' %}
+    <button class="bg-indigo-500 px-4 py-2 rounded-xl text-white"><a href="/verifybef">Verify Report</a></button>
+    {% endif %}
+    <button class="bg-red-500 px-4 py-2 rounded-xl text-white"><a href="/logout"
+        style="text-decoration: none;">Logout</a></button>
+  </div>
+
+  <!-- Sections -->
+  <main class="p-6 max-w-5xl mx-auto">
+   
+    <!--Collab Section-->
+    <section id="collabSection" class="p-4">
+      <h2 class="text-xl font-bold mb-2">Collaboration Board</h2>
+      <table id="taskTable" class="w-full border table table-hover border-gray-300">
+        <thead class="table-success">
+          <tr class="bg-gray-200">
+            <th class="p-2">Task Title</th>
+            <th class="p-2">Task Location</th>
+            <th class="p-2">Task Category</th>
+            <th class="p-2">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in rows %}
+          <tr>
+            <td>{{i.title}}</td>
+            <td>{{i.lat}}, {{i.lng}}</td>
+            <td>{{i.category}}</td>
+            <td><a href="/verifyaft/{{i.id}}" class="btn btn-primary">Claim</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+</body>
+
+</html>

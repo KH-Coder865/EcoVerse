@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Reports - EcoVerse</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <header class="p-5 bg-gradient-to-r from-green-700 to-emerald-600 text-white text-center text-2xl font-extrabold shadow-md">
+    Verify Reports – EcoVerse
+  </header>
+
+  <!-- Verification Table -->
+  <main class="p-6 max-w-5xl mx-auto">
+    <section class="bg-white rounded-xl shadow-md p-4 mb-6">
+      <h2 class="text-xl font-bold mb-4">Pending Reports</h2>
+      <table class="w-full border border-gray-300 text-center" id="verifyTable">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="p-2">Reporter</th>
+            <th class="p-2">Category</th>
+            <th class="p-2">Description</th>
+            <th class="p-2">Location</th>
+            <th class="p-2">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- JS dynamically adds pending reports here -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Verified Map -->
+    <section class="bg-white rounded-xl shadow-md p-4">
+      <h2 class="text-xl font-bold mb-4">Verified Reports Map</h2>
+      <div id="verifiedMap" class="w-full h-96 rounded-xl"></div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>

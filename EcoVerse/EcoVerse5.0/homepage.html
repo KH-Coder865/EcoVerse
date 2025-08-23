@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoVerse – From Sightings to Verified Action</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart JS -->
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+  <!--Google APIs-->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <!-- Header -->
+  <header class="p-5 bg-gradient-to-r from-green-700 to-emerald-600 text-white text-center text-2xl sm:text-3xl font-extrabold shadow-md">
+  🌍 EcoVerse – From Sightings to Verified Action
+</header>
+
+  <!--login-->
+  <div class="login-box">
+    <div class="icon">🌱</div>
+    <h2>Climate Action Login</h2>
+    <form style="display: flex; flex-direction: column; gap: 20px;">
+      <input type="text" placeholder="🌍 Username" required>
+      <input type="password" placeholder="🔒 Password" required>
+      <a class="button" href="/home">Login</a>
+    </form>
+    <div class="extra">
+      <p>Don't have an account? <a id="showSignup" href="#">Sign Up</a></p>
+    </div>
+  </div>
+    <!--signup-->
+    <div class="signup-box hidden">
+      <div class="icon">🌱</div>
+      <h2>Create Account</h2>
+      <form style="display: flex; flex-direction: column; gap: 20px;">
+      <input type="text" placeholder="🌍 New Username" required>
+      <input type="password" placeholder="🔒 New Password" required>
+      <a class="button" href="#">Sign Up</a>
+  </form>
+  <div class="extra">
+    <p>Already have an account? <a id="showLogin" href="#">Login</a></p>
+  </div>
+</div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Custom JS -->
+  <script src="script.js"></script>
+</body>
+</html>
