@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Verified Reports Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+  <style>
+    #map { height: 70vh; width: 70%; }
+  </style>
+</head>
+<body style="display: flex; flex-direction: column; align-items: center;">
+  <header class="p-5 bg-gradient-to-r from-green-700 to-emerald-600 text-white text-center text-2xl sm:text-3xl font-extrabold shadow-md" style="width: 100vw;">
+    🌍 EcoVerse – From Sightings to Verified Action
+  </header>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // initialize map
+    var map = L.map('map').setView([20.5937, 78.9629], 5); // centered on India
+
+    // add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // fetch verified reports
+    fetch("/api/reports/verified")
+      .then(response => response.json())
+      .then(data => {
+        data.forEach(rep => {
+          if (rep.lat && rep.lng) {
+            let marker = L.marker([rep.lat, rep.lng]).addTo(map);
+            marker.bindPopup(`
+              <b>${rep.title}</b><br>
+              ${rep.description}<br>
+              <i>Category: ${rep.category}</i><br>
+              <img src="/${rep.fpath}" alt="photo" width="100">
+            `);
+          }
+        });
+      });
+  </script>
+</body>
+</html>

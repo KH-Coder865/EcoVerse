@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoVerse – Leaderboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+  <header class="p-5 bg-gradient-to-r from-green-700 to-emerald-600 text-white text-center text-2xl sm:text-3xl font-extrabold shadow-md">
+    🏆 EcoVerse Leaderboard
+  </header>
+  <main class="p-6 max-w-5xl mx-auto">
+    <section id="leaderboardSection" class="bg-white rounded-2xl shadow-md p-5 sm:p-6">
+      <h2 class="text-xl font-bold mb-2">Top Eco-Warriors 🌱</h2>
+      <div class="overflow-x-auto rounded-xl border border-gray-200">
+        <table class="w-full border text-center">
+          <thead>
+            <tr class="bg-gray-300">
+              <th class="p-2">Rank</th>
+              <th class="p-2">Name</th>
+              <th class="p-2">EcoPoints</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardTable">
+            {% for row in leaderboard %}
+            <tr class="hover:bg-gray-100 transition">
+              <td class="p-2 font-bold">{{ row.rank }}</td>
+              <td class="p-2">{{ row.username }}</td>
+              <td class="p-2 text-green-700 font-semibold">{{ row.eco_points }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

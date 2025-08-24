@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoVerse – From Sightings to Verified Action</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
+</head>
+
+<body class="bg-gray-100 text-gray-900" style="display: flex; flex-direction: column; align-items: center;">
+  <!-- Header -->
+  <header style="width: 100vw;"
+    class="p-5 bg-gradient-to-r from-green-700 to-emerald-600 text-white text-center text-2xl sm:text-3xl font-extrabold shadow-md">
+    🌍 EcoVerse – From Sightings to Verified Action
+  </header>
+
+<main> 
+<div class="login-box" style="margin-top: 10px;">
+    {% if txt %}
+    <div style="background-color: rgb(11, 245, 11); color:black; border-radius: 5px;">{{txt}}</div>
+    {% endif %}
+    <h2 class="text-xl font-bold mb-3">Verify & Resolve Sighting ✅</h2>
+    <form method="post" action="{{ url_for('vaftr', rid=id) }}" enctype="multipart/form-data">
+        <textarea id="desc" name="desc" placeholder="How was this problem resolved?"
+        class="w-full p-3 border border-gray-200 rounded-xl" style="color: black;"
+        required></textarea>
+        <label>Upload Proof Images:</label>
+        <input type="file" id="photos" name="photos" accept="image/*"
+        class="w-full p-2 border border-gray-200 rounded-xl shadow-sm" required />
+        
+        <button type="submit"
+        class="bg-indigo-600 px-5 py-3 rounded-xl text-white font-semibold hover:bg-indigo-700 active:scale-[0.98] transition">Submit
+        Verification</button>
+    </form>
+    
+</div>
+    
+
+  </main>
+
+  <!-- Custom JS -->
+  <script src="{{url_for('static', filename='script.js')}}"></script>
+</body>
+
+</html>
