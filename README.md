@@ -1,5 +1,6 @@
 # EcoVerse
-Collaborative Platform for Climate Action, Marine Conservation, and Biodiversity Protection
+Collaborative Platform for Climate Action, Marine Conservation, and Biodiversity Protection.
+Fast and efficient ecological issue tracking and resolving platform.
  
 ---
 ## Tech Stack Used
